@@ -3,7 +3,7 @@
 import styles from "./page.module.scss";
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import axios from "axios";
+import { createBlog } from '@/app/actions/serverActions';
 
 export default function NovoBlog() {
   const router = useRouter();
@@ -34,8 +34,8 @@ export default function NovoBlog() {
 
     try {
       setIsLoading(true);
-      // Usar a nova API route em vez da função de servidor
-      const response = await axios.post('/api/blog/create', formData);
+      // Usar a Server Action em vez da chamada direta com Axios
+      const response = await createBlog(formData);
       
       setSuccess('Blog criado com sucesso!');
       setError('');

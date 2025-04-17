@@ -3,8 +3,7 @@
 import styles from "./page.module.scss";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
-import axios from "axios";
-import { handleBlogs } from "../../../../actions/serverActions"; // Mantemos esta função apenas para buscar dados
+import { updateBlog, getBlogById } from '@/app/actions/serverActions';
 
 interface BlogData {
   id: string;
@@ -31,23 +30,17 @@ export default function EditarBlog({ params }: { params: { id: string } }) {
       try {
         setIsLoading(true);
         // Ainda podemos usar handleBlogs para obter os dados
-        const response = await handleBlogs();
+        const response = await getBlogById(params.id);
         
-        if (!response.blog || !Array.isArray(response.blog)) {
-          throw new Error("Falha ao buscar blogs");
-        }
-        
-        const blogData = response.blog.find((b: any) => b.id === params.id);
-        
-        if (!blogData) {
+        if (!response.blog) {
           throw new Error("Blog não encontrado");
         }
         
-        setBlog(blogData);
+        setBlog(response.blog);
         setFormData({
-          titulo: blogData.titulo,
-          texto: blogData.texto,
-          Banner: blogData.Banner
+          titulo: response.blog.titulo,
+          texto: response.blog.texto,
+          Banner: response.blog.Banner
         });
       } catch (error: any) {
         setError(error.message || 'Erro ao carregar o blog');
@@ -78,8 +71,8 @@ export default function EditarBlog({ params }: { params: { id: string } }) {
 
     try {
       setIsLoading(true);
-      // Usar a nova API route em vez da função de servidor
-      const response = await axios.put('/api/blog/update', {
+      // Usar a Server Action em vez da chamada direta com Axios
+      const response = await updateBlog({
         id: params.id,
         ...formData
       });
