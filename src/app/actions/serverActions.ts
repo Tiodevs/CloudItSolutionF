@@ -79,7 +79,17 @@ export async function updateBlog(data: { id: string, titulo: string, texto: stri
     return response.data;
   } catch (err: any) {
     console.error("Erro ao atualizar o blog:", err);
-    throw new Error(err.message);
+    // Adicionar mais detalhes sobre o erro para facilitar o debug
+    if (err.response) {
+      console.error("Detalhes do erro:", {
+        data: err.response.data,
+        status: err.response.status,
+        headers: err.response.headers
+      });
+    } else if (err.request) {
+      console.error("Erro na requisição (sem resposta):", err.request);
+    }
+    throw new Error(err.message || "Erro desconhecido ao atualizar o blog");
   }
 }
 
@@ -92,6 +102,16 @@ export async function createBlog(data: { titulo: string, texto: string, Banner: 
     return response.data;
   } catch (err: any) {
     console.error("Erro ao criar o blog:", err);
-    throw new Error(err.message);
+    // Adicionar mais detalhes sobre o erro para facilitar o debug
+    if (err.response) {
+      console.error("Detalhes do erro:", {
+        data: err.response.data,
+        status: err.response.status,
+        headers: err.response.headers
+      });
+    } else if (err.request) {
+      console.error("Erro na requisição (sem resposta):", err.request);
+    }
+    throw new Error(err.message || "Erro desconhecido ao criar o blog");
   }
 }
