@@ -52,11 +52,16 @@
     h1 {
         font-size: 50px;
         color: #3C5ABE;
+        margin-bottom: 30px;
     }
 
     p {
         font-size: 25px;
         color: #656565;
+        line-height: 1.6;
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: left;
     }
 }
 
@@ -94,6 +99,13 @@
 
         p{
             font-size: 19px;
+        }
+        
+        .readMore {
+            margin-top: 15px;
+            color: #3C5ABE;
+            font-weight: 600;
+            text-decoration: underline;
         }
     }
 }
@@ -269,6 +281,27 @@
         height: 670px;
         object-fit: cover;
     }
+    
+    .headerline {
+        padding: 80px 50px;
+        
+        h1 {
+            font-size: 42px;
+        }
+        
+        p {
+            font-size: 22px;
+            max-width: 900px;
+        }
+    }
+    
+    .posts {
+        padding: 50px;
+        
+        .post {
+            width: 450px;
+        }
+    }
 }
 
 @media (max-width: 1150px) {
@@ -338,6 +371,38 @@
 
         }
     }
+    
+    .headerline {
+        padding: 50px 25px;
+        
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+            text-align: left;
+        }
+    }
+    
+    .posts {
+        padding: 30px 25px;
+        
+        .post {
+            width: 100%;
+            padding: 25px;
+            
+            h2 {
+                font-size: 22px;
+            }
+            
+            p {
+                font-size: 16px;
+            }
+        }
+    }
 }
 
 @media (max-width: 570px) {
@@ -372,5 +437,19 @@
 
         }
 
+    }
+    
+    .headerline {
+        padding: 40px 20px;
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        p {
+            font-size: 16px;
+            line-height: 1.4;
+        }
     }
 }

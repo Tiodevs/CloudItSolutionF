@@ -96,6 +96,13 @@
         p{
             font-size: 19px;
         }
+        
+        .readMore {
+            margin-top: 15px;
+            color: #3C5ABE;
+            font-weight: 600;
+            text-decoration: underline;
+        }
     }
 }
 
@@ -301,6 +308,14 @@
         height: 670px;
         object-fit: cover;
     }
+    
+    .posts {
+        padding: 50px;
+        
+        .post {
+            width: 450px;
+        }
+    }
 }
 
 @media (max-width: 1150px) {
@@ -368,6 +383,35 @@
             }
 
 
+        }
+    }
+
+    .headerline {
+        padding: 50px 25px;
+        
+        h1 {
+            font-size: 36px;
+        }
+        
+        p {
+            font-size: 20px;
+        }
+    }
+    
+    .posts {
+        padding: 30px 25px;
+        
+        .post {
+            width: 100%;
+            padding: 25px;
+            
+            h2 {
+                font-size: 22px;
+            }
+            
+            p {
+                font-size: 16px;
+            }
         }
     }
 }
