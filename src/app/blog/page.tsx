@@ -5,6 +5,7 @@ import { Header } from "../components/header";
 import Image from 'next/image';
 import { useEffect, useState } from "react";
 import { handleBlogs } from "../actions/serverActions";
+import { motion } from 'framer-motion';
 
 export default function Home() {
   // Altere o valor inicial de blogs para um array vazio
@@ -50,20 +51,43 @@ export default function Home() {
     <div>
       <main className={styles.main}>
         <Header />
-        <Image
-          alt="Logo Sujeito Pizza"
-          src={"/capahome.png"}
-          className={styles.capa}
-          width={1920}
-          height={670}
-          priority={true}
-          quality={100}
-        />
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Image
+            alt="Logo Sujeito Pizza"
+            src={"/capahome.png"}
+            className={styles.capa}
+            width={1920}
+            height={670}
+            priority={true}
+            quality={100}
+          />
+        </motion.div>
 
-        <div className={styles.headerline}>
-          <h1>Nossos blogs</h1>
-          <p>Fique sempre atualizado através do nosso blog</p>
-        </div>
+        <motion.div 
+          className={styles.headerline}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+        >
+          <motion.h1
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            Nossos blogs
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+          >
+            Fique sempre atualizado através do nosso blog
+          </motion.p>
+        </motion.div>
 
         {/* Exibição do spinner enquanto os blogs estão sendo carregados */}
         {isLoading ? (
@@ -71,7 +95,19 @@ export default function Home() {
             <img src="/spinner.gif" alt="Carregando..." /> {/* Imagem de spinner */}
           </div>
         ) : (
-          <div className={styles.posts}>
+          <motion.div 
+            className={styles.posts}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.15
+                }
+              },
+              hidden: {}
+            }}
+          >
             {/* Renderiza os blogs usando map */}
             {blogs.length > 0 ? (
               blogs.map((blog) => {
@@ -82,7 +118,17 @@ export default function Home() {
                 const textWithLineBreaks = limitedText.replace(/\n/g, '<br />');
 
                 return (
-                  <a href={"/blog/" + blog.id} key={blog.id}>
+                  <motion.a 
+                    href={"/blog/" + blog.id} 
+                    key={blog.id}
+                    variants={{
+                      visible: { opacity: 1, y: 0 },
+                      hidden: { opacity: 0, y: 50 }
+                    }}
+                    transition={{ duration: 0.5 }}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
                     <div className={styles.post}>
                       <h2>{blog.titulo}</h2>
                       <p className={styles.postdate}>
@@ -92,65 +138,143 @@ export default function Home() {
                       <p dangerouslySetInnerHTML={{ __html: textWithLineBreaks }}></p>
                       <a href={"/blog/" + blog.id} className={styles.readMore}>Ler mais</a> {/* Link para ler mais */}
                     </div>
-                  </a>
+                  </motion.a>
                 );
               })
             ) : (
-              <p>Não há blogs para exibir no momento.</p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                Não há blogs para exibir no momento.
+              </motion.p>
             )}
-          </div>
+          </motion.div>
         )}
 
-<div className={styles.cta2}>
-                    <h1 className={styles.ctatitle}>Você está preparado para o <span>próximo passo?</span></h1>
-                    <div>
-                        <p>Descubra como a Cloud IT Solutions pode transformar seu negócio—entre em contato e dê o primeiro passo rumo à inovação!</p>
-                        <div className={styles.ctabtn}>
-                            <a href="/contact" className={styles.btnctamain}>Começe agora</a>
-                        </div>
-                    </div>
-                </div>
+        <motion.div 
+          className={styles.cta2}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <motion.h1 
+            className={styles.ctatitle}
+            initial={{ scale: 0.9 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            Você está preparado para o <span>próximo passo?</span>
+          </motion.h1>
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            <p>Descubra como a Cloud IT Solutions pode transformar seu negócio—entre em contato e dê o primeiro passo rumo à inovação!</p>
+            <div className={styles.ctabtn}>
+              <a href="/contact" className={styles.btnctamain}>Começe agora</a>
+            </div>
+          </motion.div>
+        </motion.div>
 
-        <footer className={styles.footer}>
-                    <div className={styles.footercontent}>
-                        <h3>Contato</h3>
-                        <p>Estamos prontos para ajudar seu negócio a alcançar novas alturas! Entre em contato com a Cloud IT Solutions hoje mesmo e saiba como nossas soluções personalizadas podem atender às suas necessidades. Sua jornada rumo à inovação começa aqui!
-                        </p>
-                        <div className={styles.footerlinks}>
-                            <a href="mailto:comercial@cloudconsulting.com.br">
-                                <Image
-                                    alt="Logo Sujeito Pizza"
-                                    src={"/iconemail.png"}
-                                    width={24}
-                                    height={24}
-                                    priority={true}
-                                    quality={100}
-                                />
-                                comercial@cloudconsulting.com.br
-                            </a>
-                            <a href="https://www.instagram.com/sapeia_/">
-                                <Image
-                                    alt="Logo Sujeito Pizza"
-                                    src={"/iconinstagram.png"}
-                                    width={24}
-                                    height={24}
-                                    priority={true}
-                                    quality={100}
-                                />
-                            </a>
-                            <a href="https://www.linkedin.com/company/cloud-itsolutions/">
-                                <Image
-                                    alt="Logo Sujeito Pizza"
-                                    src={"/linkedin.png"}
-                                    width={24}
-                                    height={24}
-                                    priority={true}
-                                    quality={100}
-                                />
-                            </a>
-                        </div>
-                    </div>
-                </footer>
+        <motion.footer 
+          className={styles.footer}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true, margin: "-50px" }}
+        >
+          <div className={styles.footercontent}>
+            <motion.h3
+              initial={{ y: 10, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+            >
+              Contato
+            </motion.h3>
+            <motion.p
+              initial={{ y: 10, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              Estamos prontos para ajudar seu negócio a alcançar novas alturas! Entre em contato com a Cloud IT Solutions hoje mesmo e saiba como nossas soluções personalizadas podem atender às suas necessidades. Sua jornada rumo à inovação começa aqui!
+            </motion.p>
+            <motion.div 
+              className={styles.footerlinks}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                visible: {
+                  transition: {
+                    staggerChildren: 0.1
+                  }
+                },
+                hidden: {}
+              }}
+            >
+              <motion.a 
+                href="mailto:comercial@cloudconsulting.com.br"
+                variants={{
+                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: 10 }
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                <Image
+                  alt="Logo Sujeito Pizza"
+                  src={"/iconemail.png"}
+                  width={24}
+                  height={24}
+                  priority={true}
+                  quality={100}
+                />
+                comercial@cloudconsulting.com.br
+              </motion.a>
+              <motion.a 
+                href="https://www.instagram.com/sapeia_/"
+                variants={{
+                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: 10 }
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                <Image
+                  alt="Logo Sujeito Pizza"
+                  src={"/iconinstagram.png"}
+                  width={24}
+                  height={24}
+                  priority={true}
+                  quality={100}
+                />
+              </motion.a>
+              <motion.a 
+                href="https://www.linkedin.com/company/cloud-itsolutions/"
+                variants={{
+                  visible: { opacity: 1, y: 0 },
+                  hidden: { opacity: 0, y: 10 }
+                }}
+                transition={{ duration: 0.4 }}
+              >
+                <Image
+                  alt="Logo Sujeito Pizza"
+                  src={"/linkedin.png"}
+                  width={24}
+                  height={24}
+                  priority={true}
+                  quality={100}
+                />
+              </motion.a>
+            </motion.div>
+          </div>
+        </motion.footer>
       </main>
     </div>
   );

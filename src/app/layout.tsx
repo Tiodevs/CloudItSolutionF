@@ -1,21 +1,23 @@
-import type { Metadata } from "next";
-import "./globals.scss";
+import './globals.scss'
+import { Metadata } from 'next'
+import { WhatsAppButton } from './components/WhatsAppButton'
 
 export const metadata: Metadata = {
-  title: "It Cloud Solution",
-  description: "Pagina do cloud it solution",
-};
+  title: 'Cloud IT Solutions',
+  description: 'Cloud IT Solutions é uma provedora de soluções de Tecnologia da Informação, especializada em consultoria SAP e serviços relacionados à transformação digital',
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="pt-br">
       <body>
         {children}
+        <WhatsAppButton />
       </body>
     </html>
-  );
+  )
 }
