@@ -33,6 +33,19 @@ export async function handleLead(data: { nome: string; email: string; numero: st
   }
 }
 
+// Função para buscar todos os leads
+export async function handleLeads() {
+  try {
+    const response = await api.get("/lead");
+    
+    console.log("Leads encontrados", response.data);
+    return { leads: response.data };
+  } catch (err: any) {
+    console.error("Erro ao buscar os leads:", err);
+    throw new Error(err.message);
+  }
+}
+
 // Função para deletar um blog
 export async function deleteBlog(blogId: string) {
   try {

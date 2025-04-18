@@ -1,6 +1,7 @@
 import './globals.scss'
 import { Metadata } from 'next'
 import { WhatsAppButton } from './components/WhatsAppButton'
+import { AdminButton } from './components/AdminButton'
 
 export const metadata: Metadata = {
   title: 'Cloud IT Solutions',
@@ -17,6 +18,7 @@ export default function RootLayout({
       <body>
         {children}
         <WhatsAppButton />
+        <AdminButton />
       </body>
     </html>
   )
