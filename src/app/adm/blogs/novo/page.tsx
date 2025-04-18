@@ -10,7 +10,7 @@ export default function NovoBlog() {
   const [formData, setFormData] = useState({
     titulo: '',
     texto: '',
-    Banner: ''
+    Banner: 'Sem link' // Valor padrão para o Banner
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -27,7 +27,7 @@ export default function NovoBlog() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.titulo.trim() || !formData.texto.trim() || !formData.Banner.trim()) {
+    if (!formData.titulo.trim() || !formData.texto.trim()) {
       setError('Todos os campos são obrigatórios');
       return;
     }
@@ -44,7 +44,7 @@ export default function NovoBlog() {
       setFormData({
         titulo: '',
         texto: '',
-        Banner: ''
+        Banner: 'Sem link'
       });
       
       // Redirecionar após 2 segundos
@@ -109,19 +109,6 @@ export default function NovoBlog() {
                 onChange={handleChange}
                 required
                 placeholder="Digite o título do blog"
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="Banner">Banner (URL da imagem)</label>
-              <input
-                type="text"
-                id="Banner"
-                name="Banner"
-                value={formData.Banner}
-                onChange={handleChange}
-                required
-                placeholder="Digite a URL da imagem de capa"
               />
             </div>
 

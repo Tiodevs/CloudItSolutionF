@@ -52,10 +52,15 @@ export async function deleteBlog(blogId: string) {
 export async function getBlogById(blogId: string) {
   try {
     const response = await handleBlogs();
+
+    console.log("Blogs achados", response.blog)
+    console.log("Blog ID", blogId)
     
     if (!response.blog || !Array.isArray(response.blog)) {
       throw new Error("Falha ao buscar blogs");
     }
+
+
     
     const blog = response.blog.find((b: any) => b.id === blogId);
     
@@ -104,18 +109,25 @@ export async function updateBlog(data: { id: string, titulo: string, texto: stri
 }
 
 // Função para criar um novo blog
-export async function createBlog(data: { titulo: string, texto: string, Banner: string }) {
+export async function createBlog(data: { titulo: string, texto: string, Banner?: string }) {
   try {
-    console.log("Dados que serão enviados para criar blog:", {
+    // Garantindo que Banner tenha um valor padrão se não for fornecido
+    const blogData = {
       titulo: data.titulo,
-      texto: data.texto, 
-      Banner: data.Banner,
-      comprimentoTitulo: data.titulo?.length,
-      comprimentoTexto: data.texto?.length,
-      comprimentoBanner: data.Banner?.length
+      texto: data.texto,
+      Banner: data.Banner || "Sem link"
+    };
+    
+    console.log("Dados que serão enviados para criar blog:", {
+      titulo: blogData.titulo,
+      texto: blogData.texto, 
+      Banner: blogData.Banner,
+      comprimentoTitulo: blogData.titulo?.length,
+      comprimentoTexto: blogData.texto?.length,
+      comprimentoBanner: blogData.Banner?.length
     });
     
-    const response = await api.post("/blog", data);
+    const response = await api.post("/blog", blogData);
 
     console.log("Blog criado com sucesso", response.data);
     return response.data;
