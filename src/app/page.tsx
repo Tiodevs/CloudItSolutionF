@@ -38,7 +38,7 @@ export default function Home() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7 }}
                     >
-                        Cloud IT Solutions: Sua Parceira em Transformação Digital
+                        Cloud IT Solutions | Consultoria SAP e Transformação Digital para Empresas
                     </motion.h1>
 
                     <motion.p

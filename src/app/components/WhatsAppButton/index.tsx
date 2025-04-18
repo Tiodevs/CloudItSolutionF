@@ -4,7 +4,7 @@ import styles from './styles.module.scss';
 export function WhatsAppButton() {
   return (
     <a 
-      href="https://wa.me/5511999999999" // Substitua pelo número correto do WhatsApp
+      href="https://wa.me/+5541985248721" // Substitua pelo número correto do WhatsApp
       target="_blank"
       rel="noopener noreferrer"
       className={styles.whatsappButton}

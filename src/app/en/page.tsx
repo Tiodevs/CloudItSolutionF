@@ -109,8 +109,8 @@ export default function Home() {
                             priority={true}
                             quality={100}
                         />
-                        <h2>Serviço de Advisory</h2>
-                        <p>Suporte especializado que ajuda as empresas a maximizar o valor das soluções SAP que utilizam, garantindo que essas tecnologias estejam alinhadas aos objetivos de negócios da organização.</p>
+                        <h2>Advisory Service</h2>
+                        <p>Specialized support that helps companies maximize the value of the SAP solutions they use, ensuring that these technologies are aligned with the organization's business goals.</p>
                     </div>
                 </div>
 
