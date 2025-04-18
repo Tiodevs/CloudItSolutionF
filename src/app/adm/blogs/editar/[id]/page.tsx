@@ -19,7 +19,7 @@ export default function EditarBlog({ params }: { params: { id: string } }) {
   const [formData, setFormData] = useState({
     titulo: '',
     texto: '',
-    Banner: ''
+    Banner: 'Sem link' // Valor padrão para o Banner
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -29,18 +29,14 @@ export default function EditarBlog({ params }: { params: { id: string } }) {
     async function loadBlog() {
       try {
         setIsLoading(true);
-        // Ainda podemos usar handleBlogs para obter os dados
-        const response = await getBlogById(params.id);
+        // Agora usamos a API para obter blog específico por ID
+        const blog = await getBlogById(params.id);
         
-        if (!response.blog) {
-          throw new Error("Blog não encontrado");
-        }
-        
-        setBlog(response.blog);
+        setBlog(blog);
         setFormData({
-          titulo: response.blog.titulo,
-          texto: response.blog.texto,
-          Banner: response.blog.Banner
+          titulo: blog.titulo,
+          texto: blog.texto,
+          Banner: blog.Banner // Manteremos o Banner original, mas não mostraremos no formulário
         });
       } catch (error: any) {
         setError(error.message || 'Erro ao carregar o blog');
@@ -64,7 +60,7 @@ export default function EditarBlog({ params }: { params: { id: string } }) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.titulo.trim() || !formData.texto.trim() || !formData.Banner.trim()) {
+    if (!formData.titulo.trim() || !formData.texto.trim()) {
       setError('Todos os campos são obrigatórios');
       return;
     }
@@ -147,18 +143,6 @@ export default function EditarBlog({ params }: { params: { id: string } }) {
                 id="titulo"
                 name="titulo"
                 value={formData.titulo}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="Banner">Banner (URL da imagem)</label>
-              <input
-                type="text"
-                id="Banner"
-                name="Banner"
-                value={formData.Banner}
                 onChange={handleChange}
                 required
               />

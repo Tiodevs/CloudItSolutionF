@@ -51,44 +51,55 @@ export async function deleteBlog(blogId: string) {
 // Função para buscar um blog específico pelo ID
 export async function getBlogById(blogId: string) {
   try {
-    const response = await handleBlogs();
-
-    console.log("Blogs achados", response.blog)
-    console.log("Blog ID", blogId)
+    console.log("Buscando blog com ID:", blogId);
     
-    if (!response.blog || !Array.isArray(response.blog)) {
-      throw new Error("Falha ao buscar blogs");
-    }
-
-
+    const response = await api.get(`/blog/id?id=${blogId}`);
     
-    const blog = response.blog.find((b: any) => b.id === blogId);
+    console.log("Blog encontrado:", response.data);
     
-    if (!blog) {
+    if (!response.data) {
       throw new Error("Blog não encontrado");
     }
     
-    return blog;
+    return response.data;
   } catch (err: any) {
     console.error("Erro ao buscar o blog:", err);
-    throw new Error(err.message);
+    // Adicionar mais detalhes sobre o erro para facilitar o debug
+    if (err.response) {
+      console.error("Detalhes do erro:", {
+        data: err.response.data,
+        status: err.response.status,
+        headers: err.response.headers
+      });
+    } else if (err.request) {
+      console.error("Erro na requisição (sem resposta):", err.request);
+    }
+    throw new Error(err.message || "Erro desconhecido ao buscar o blog");
   }
 }
 
 // Função para atualizar um blog
-export async function updateBlog(data: { id: string, titulo: string, texto: string, Banner: string }) {
+export async function updateBlog(data: { id: string, titulo: string, texto: string, Banner?: string }) {
   try {
-    console.log("Dados que serão enviados para atualizar blog:", {
+    // Garantindo que Banner tenha um valor válido
+    const blogData = {
       id: data.id,
       titulo: data.titulo,
-      texto: data.texto, 
-      Banner: data.Banner,
-      comprimentoTitulo: data.titulo?.length,
-      comprimentoTexto: data.texto?.length,
-      comprimentoBanner: data.Banner?.length
+      texto: data.texto,
+      Banner: data.Banner || "Sem link"
+    };
+    
+    console.log("Dados que serão enviados para atualizar blog:", {
+      id: blogData.id,
+      titulo: blogData.titulo,
+      texto: blogData.texto, 
+      Banner: blogData.Banner,
+      comprimentoTitulo: blogData.titulo?.length,
+      comprimentoTexto: blogData.texto?.length,
+      comprimentoBanner: blogData.Banner?.length
     });
     
-    const response = await api.put("/blog", data);
+    const response = await api.put("/blog", blogData);
 
     console.log("Blog atualizado com sucesso", response.data);
     return response.data;
