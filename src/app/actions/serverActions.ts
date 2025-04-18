@@ -73,6 +73,16 @@ export async function getBlogById(blogId: string) {
 // Função para atualizar um blog
 export async function updateBlog(data: { id: string, titulo: string, texto: string, Banner: string }) {
   try {
+    console.log("Dados que serão enviados para atualizar blog:", {
+      id: data.id,
+      titulo: data.titulo,
+      texto: data.texto, 
+      Banner: data.Banner,
+      comprimentoTitulo: data.titulo?.length,
+      comprimentoTexto: data.texto?.length,
+      comprimentoBanner: data.Banner?.length
+    });
+    
     const response = await api.put("/blog", data);
 
     console.log("Blog atualizado com sucesso", response.data);
@@ -96,6 +106,15 @@ export async function updateBlog(data: { id: string, titulo: string, texto: stri
 // Função para criar um novo blog
 export async function createBlog(data: { titulo: string, texto: string, Banner: string }) {
   try {
+    console.log("Dados que serão enviados para criar blog:", {
+      titulo: data.titulo,
+      texto: data.texto, 
+      Banner: data.Banner,
+      comprimentoTitulo: data.titulo?.length,
+      comprimentoTexto: data.texto?.length,
+      comprimentoBanner: data.Banner?.length
+    });
+    
     const response = await api.post("/blog", data);
 
     console.log("Blog criado com sucesso", response.data);

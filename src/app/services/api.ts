@@ -1,7 +1,6 @@
 import axios from "axios";
 
-// Use a variável de ambiente ou o fallback para produção
-const apiUrl = process.env.NEXT_PUBLIC_API || 'https://teste-nine-sandy.vercel.app/';
+const apiUrl = process.env.NEXT_PUBLIC_API
 
 export const api = axios.create({
     baseURL: apiUrl
